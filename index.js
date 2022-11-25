@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('node:path');
 const { Client, Events, GatewayIntentBits, Collection, Activity, ActivityType } = require('discord.js');
 const dotenv = require('dotenv');
-const { Console } = require('node:console');
 
 dotenv.config();
 
