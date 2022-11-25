@@ -1,19 +1,60 @@
 const { REST, Routes } = require('discord.js');
 const dotenv = require('dotenv');
-const fs = require('node:fs');
+const fs = require('fs');
+const path = require('node:path')
 
 dotenv.config();
 
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+// const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+// // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+// for (const file of commandFiles) {
+// 	const command = require(`./commands/${file}`);
+// 	commands.push(command.data.toJSON());
+// }
+
+
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => !(file.endsWith('.js')));
+
+console.log(commandFiles);
+
+commandFiles.forEach(directory => {
+  //const newPath = path.join(__dirname, `commands/${directory}`);
+  const newPath = path.join(__dirname, `commands/${directory}`);
+  const commandsList = fs.readdirSync(newPath).filter(file => file.endsWith('.js'));
+  console.log(newPath);
+  console.log(commandsList);
+
+    //command handler
+  for(const file of commandsList){
+	const filePath = path.join(newPath, file)
+	const command = require(filePath);
 	commands.push(command.data.toJSON());
-}
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
