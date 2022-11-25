@@ -1,5 +1,5 @@
 const {SlashCommandBuilder, bold } = require('@discordjs/builders');
-const {EmbedBuilder} = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ module.exports = {
         } else {
             const embed = new EmbedBuilder  ()
             .setColor([245, 167, 96])
-            .setDescription(bold(interaction.client.user))
+            .setDescription(bold(interaction.user.username))
             .setImage(interaction.user.displayAvatarURL({dynamic: true, size: 4096}))
             return interaction.reply({embeds: [embed]})
         }
